@@ -1,36 +1,38 @@
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    id: "summarizeSelection",
-    title: "Summarize Selected Text",
+    id: "summarizeText",
+    title: "Summarize selected text",
     contexts: ["selection"],
   });
+
   chrome.contextMenus.create({
-    id: "quizSelection",
-    title: "Generate Quiz from Selection",
+    id: "generateQuiz",
+    title: "Generate Quiz from text",
     contexts: ["selection"],
   });
 });
 
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  if (info.menuItemId === "summarizeSelection") {
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      func: summarizeSelectedText,
-    });
-  } else if (info.menuItemId === "quizSelection") {
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      func: generateQuizFromSelectedText,
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "summarizeText" || info.menuItemId === "generateQuiz") {
+    const encodedText = encodeURIComponent(info.selectionText || "");
+    const action = info.menuItemId;
+
+    chrome.windows.create({
+      url: chrome.runtime.getURL(`popup.html?action=${action}&text=${encodedText}`),
+      type: "popup",
+      width: 400,
+      height: 600,
     });
   }
 });
 
-function summarizeSelectedText() {
-  const text = window.getSelection().toString();
-  chrome.runtime.sendMessage({ action: "summarize", text });
-}
-
-function generateQuizFromSelectedText() {
-  const text = window.getSelection().toString();
-  chrome.runtime.sendMessage({ action: "quiz", text });
-}
+chrome.runtime.onMessage.addListener((msg, sender) => {
+  if (msg.action === "openPopup") {
+    chrome.windows.create({
+      url: chrome.runtime.getURL(`popup.html?text=${msg.text}`),
+      type: "popup",
+      width: 400,
+      height: 600
+    });
+  }
+});
