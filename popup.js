@@ -1,4 +1,7 @@
 
+
+
+
 document.getElementById("quiz").addEventListener("click",generateQuizFromSelectedText);
 
 
@@ -73,10 +76,11 @@ async function summarizeSelectedText() {
     });
 
     const summary = await summarizer.summarize(selectedText, {
-      context: "Explain this text simply.",
+      context: "Give the summary in simple and give html code in the form of unorder list with li tage in outer",
     });
 
-    summaryDiv.textContent = summary;
+    summaryDiv.outerHTML = summary;
+    
   } catch (err) {
     console.error(err);
     summaryDiv.textContent = "❌ Error generating summary.";
