@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("quizTab").click();
 });
 
+
 document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const action = urlParams.get("action");
@@ -91,6 +92,7 @@ themeToggle.addEventListener('click', () => {
     themeToggle.innerHTML = `<svg class="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
     </svg>`;
+    
   } else {
     themeToggle.innerHTML = `<svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -252,6 +254,7 @@ async function generateQuizFromSelectedText() {
   //change
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 chrome.tabs.sendMessage(tab.id, { action: "startBlackout" });
+
   const quizDiv = document.getElementById("result");
   quizDiv.textContent = "⏳ Generating quiz...";
   //change
@@ -331,18 +334,22 @@ Requirements:
 
 /* ----------------------------- QUIZ RENDERING ----------------------------- */
   function renderQuiz(quiz, quizDiv) {
+  // 🟡 Hide summary div when quiz starts
+  const summaryDiv = document.getElementById("summary");
+  if (summaryDiv) {
+    summaryDiv.classList.add("hidden");
+  }
+
   quizDiv.innerHTML = "";
 
   quiz.forEach((q, i) => {
     const qDiv = document.createElement("div");
-
     qDiv.classList.add("question-block");
-
     qDiv.innerHTML = `<p><b>Q${i + 1}.</b> ${q.question}</p>`;
 
     q.options.forEach((opt) => {
       const btn = document.createElement("button");
-      btn.textContent = opt;
+      btn.textContent = opt.trim();
       btn.className = "option-btn";
 
       btn.addEventListener("click", () => {
@@ -351,12 +358,17 @@ Requirements:
         allBtns.forEach((b) => (b.disabled = true));
         btn.dataset.selected = "true";
 
-        if (opt === q.answer) {
+        const selectedText = opt.trim().toLowerCase();
+        const correctText = q.answer.trim().toLowerCase();
+
+        if (selectedText === correctText) {
           btn.classList.add("correct");
         } else {
           btn.classList.add("wrong");
           allBtns.forEach((b) => {
-            if (b.textContent === q.answer) b.classList.add("correct");
+            if (b.textContent.trim().toLowerCase() === correctText) {
+              b.classList.add("correct");
+            }
           });
         }
       });
@@ -368,11 +380,10 @@ Requirements:
     quizDiv.appendChild(document.createElement("hr"));
   });
 
- 
+  // ✅ Add submit button
   const submitBtn = document.createElement("button");
-  submitBtn.classList.add("action-btn")
+  submitBtn.classList.add("action-btn");
   submitBtn.textContent = "Submit Quiz";
-  
   submitBtn.style.marginTop = "20px";
   quizDiv.appendChild(submitBtn);
 
@@ -384,13 +395,23 @@ Requirements:
     const questionBlocks = quizDiv.querySelectorAll(".question-block");
     questionBlocks.forEach((qBlock, idx) => {
       const selected = qBlock.querySelector("button[data-selected='true']");
-      if (selected && selected.textContent === quiz[idx].answer) correct++;
+      if (
+        selected &&
+        selected.textContent.trim().toLowerCase() === quiz[idx].answer.trim().toLowerCase()
+      ) {
+        correct++;
+      }
     });
 
     quizDiv.innerHTML = `<h3>🎯 Quiz Completed!</h3>
       <p>You scored <b>${correct}</b> out of <b>${total}</b>.</p>`;
 
-    // ✅ stop blackout
+    // 🟢 Restore summary div after quiz completion
+    if (summaryDiv) {
+      setTimeout(() => summaryDiv.classList.remove("hidden"), 1000);
+    }
+
+    // ✅ stop blackout effect if enabled
     try {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
       chrome.tabs.sendMessage(tab.id, { action: "stopBlackout" });
@@ -399,6 +420,7 @@ Requirements:
     }
   });
 }
+
 
 
 
