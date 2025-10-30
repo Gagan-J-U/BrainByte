@@ -4,7 +4,7 @@
 ![Chrome Extension](https://img.shields.io/badge/Platform-Chrome%20Extension-orange?style=flat-square)
 ![Built For](https://img.shields.io/badge/Built%20For-Google%20Hackathon-blue?style=flat-square)
 ![AI Powered](https://img.shields.io/badge/Powered%20By-Chrome%20AI%20(Prompt%20%26%20Summarizer)-green?style=flat-square)
-![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
+
 
 ---
 
@@ -99,12 +99,42 @@ That’s **QuiSum** — a minimal, orange-themed, AI-powered Chrome extension th
 | **Popup** | Displays results, chat UI, and quiz interface |
 | **Permissions** | `activeTab`, `scripting`, `contextMenus` |
 
-**System Flow:**
+
+## 🧩 System Flow
+
 ```mermaid
 graph TD;
-A[User Selects Text] --> B[Floating ⚡AI Button Appears];
-B --> C[Popup Triggered (Summarize / Quiz / Chat)];
-C --> D[Chrome Summarizer or Prompt API];
-D --> E[Render Output in Popup];
-E --> F[Quiz Mode Activates Dark Overlay];
-F --> G[User Interacts, Focused Screen];
+    A[User Selects Text] --> B[Floating ⚡ AI Button Appears];
+    B --> C[Popup Triggered → Summarize, Quiz, or Chat];
+    C --> D[Chrome Summarizer or Prompt API];
+    D --> E[Render Output in Popup];
+    E --> F[Quiz Mode Activates Dark Overlay];
+    F --> G[User Interacts on Focused Screen];
+    G --> H[Enhanced Learning & Retention];
+```
+
+
+
+## 🌟 Why It Stands Out (for Google Hackathon)
+
+| Feature | Description |
+|----------|--------------|
+| 🧠 **Three-in-One Chrome AI Experience** | Summarize, Quiz, and Chat with any webpage content seamlessly. |
+| 🟠 **Floating AI Button (Floater Icon)** | Appears contextually near selected text for an intuitive and fast user experience. |
+| 🌑 **Automatic Screen Darkening** | Dims the background during quizzes for improved focus and reduced distractions. |
+| 💬 **Built-in Chat Mode** | Enables interactive, context-aware explanations powered by Chrome’s on-device AI. |
+| 🧩 **Right-Click Integration** | Quickly access all features via the context menu without extra navigation. |
+| 🧱 **Material Design 3 UI** | Polished, responsive design that aligns with Google’s design principles. |
+| ⚙️ **Local Processing** | Works offline using Chrome’s Gemini Nano AI model — ensuring data privacy. |
+| 🚀 **Optimized for Focused Learning** | Reduces cognitive load by keeping all learning tools within one workflow. |
+
+---
+
+## 🔮 Future Improvements
+
+- 🗣️ **Voice Interaction** — Talk to QuiSum and learn hands-free  
+- 🧮 **Adaptive Quiz Difficulty** — Smart question scaling based on performance  
+- 🧠 **Learning History & Analytics** — Track progress, revisit weaknesses  
+- 🤝 **Collaborative Study Groups** — Share AI-generated quizzes or summaries with friends  
+- 🪶 **Theme Personalization** — Choose from Light, Dark, or Orange-Pro themes  
+
