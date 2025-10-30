@@ -9,6 +9,45 @@ const quizView = document.getElementById('quizView');
 const chatView = document.getElementById('chatView');
 const themeToggle = document.getElementById('themeToggle');
 
+
+let sessionPromise = null;
+
+async function getSession() {
+  // If session is already being created or exists, reuse it
+  if (sessionPromise) return sessionPromise;
+
+  sessionPromise = (async () => {
+    const available = await LanguageModel.availability();
+    if (available === "unavailable") {
+      throw new Error("⚠️ LanguageModel API unavailable. Enable it in chrome://flags.");
+    }
+
+    const model = await LanguageModel.create({
+  initialPrompts: [
+    {
+      role: "system",
+      content: "You are an AI that can generate quizzes and chat with users. Keep answers clear, concise, and friendly."
+    },
+    {
+      role: "user",
+      content: "If the user selects text, generate a quiz. If they chat, respond normally."
+    }
+  ],
+  expectedInputs: [{ type: "text", languages: ["en"] }],
+  expectedOutputs: [{ type: "text", languages: ["en"] }],
+});
+
+
+    console.log("✅ LanguageModel session ready!");
+    return model;
+  })();
+
+  return sessionPromise;
+}
+
+
+
+
 quizTab.addEventListener('click', () => {
   quizTab.classList.add('active');
   chatTab.classList.remove('active');
@@ -45,8 +84,32 @@ const chatSendBtn = document.getElementById('chatSendBtn');
 const chatMessages = document.getElementById('chatMessages');
 
 function sendMessage() {
-  const message = chatInput.value.trim();
-  if (!message) return;
+
+//chatbot
+
+(async () => {
+  // --- Check if Prompt API is available ---
+  const available = await LanguageModel.availability();
+  if (available === 'unavailable') {
+    console.error("⚠ Prompt API not available. Make sure you're using Chrome 138+ and 'window.ai' is enabled in chrome://flags.");
+    return;
+  }
+
+  // --- Wait for user interaction to allow model download ---
+  if (!navigator.userActivation.isActive) {
+    console.warn("⚠ Click somewhere on the page before running this code again. User activation required for model download.");
+    return;
+  }
+
+
+
+  
+
+
+  // --- Chat loop ---
+  async function chat() {
+    const Message =chatInput.value.trim();
+  if (!Message) return;
 
   const time = new Date().toLocaleTimeString('en-US', {
     hour: '2-digit',
@@ -58,7 +121,7 @@ function sendMessage() {
     <div class="message" style="flex-direction: row-reverse; text-align: right;">
       <div>
         <div class="message-content" style="background: linear-gradient(90deg, #2f80ed, #56ccf2); margin-left: auto;">
-          <div class="message-text">${message}</div>
+          <div class="message-text">${Message}</div>
         </div>
         <div class="message-time">${time}</div>
       </div>
@@ -68,15 +131,18 @@ function sendMessage() {
   chatMessages.insertAdjacentHTML('beforeend', userMessage);
   chatInput.value = '';
   chatMessages.scrollTop = chatMessages.scrollHeight;
+    if (!Message) return;
 
-  // Simulate AI response (replace with actual API call)
-  setTimeout(() => {
+    console.log("🤖 Chatbot is typing...");
+    const session = await getSession();
+    // Stream model response
+    const stream =await session.prompt(Message);
     const aiResponse = `
       <div class="message">
         <div class="message-avatar">🤖</div>
         <div>
           <div class="message-content">
-            <div class="message-text">I received your message: "${message}". This is where the AI response would appear!</div>
+            <div class="message-text">"${stream}"</div>
           </div>
           <div class="message-time">${time}</div>
         </div>
@@ -84,7 +150,21 @@ function sendMessage() {
     `;
     chatMessages.insertAdjacentHTML('beforeend', aiResponse);
     chatMessages.scrollTop = chatMessages.scrollHeight;
-  }, 1000);
+
+    // Show token usage
+    console.log(`\n📊 Session usage: ${session.inputUsage}/${session.inputQuota} tokens`);
+
+    // Continue chat
+    chat();
+  }
+
+  // --- Start chat ---
+  chat();
+})();
+  // Simulate AI response (replace with actual API call)
+  
+
+
 }
 
 chatSendBtn.addEventListener('click', sendMessage);
@@ -165,18 +245,7 @@ async function generateQuizFromSelectedText() {
       return;
     }
 
-    const session = await LanguageModel.create({
-      initialPrompts: [
-        {
-          role: "system",
-          content:
-            "You generate MCQ quizzes from given text. Each question has 4 options and 1 correct answer.",
-        },
-      ],
-      expectedInputs: [{ type: "text", languages: ["en"] }],
-      expectedOutputs: [{ type: "text", languages: ["en"] }],
-    });
-
+    const session = await getSession();
     const schema = {
       type: "array",
       items: {
@@ -191,10 +260,23 @@ async function generateQuizFromSelectedText() {
     };
 
     const prompt = `
-      Create a short multiple-choice quiz (${document.getElementById("questions")} questions) from this text with a difficulty of ${document.getElementById("difficulty").value}.:
-      """${selectedText}"""
-      Make sure the answer to the questions are randomly placed among the options.
-    `;
+Generate a ${document.getElementById("difficulty").value} level multiple-choice quiz with ${document.getElementById("questions").value} questions based on the text below.
+
+Text:
+"""
+${selectedText}
+"""
+
+Requirements:
+- Each question should test key concepts from the text.
+- Provide exactly 4 answer options per question.
+- Randomly position the correct answer among the 4 options.
+- Clearly mark the correct answer (e.g., "Correct answer: B" or similar).
+- Keep the language concise and easy to understand.
+- Do not include explanations unless asked.
+- Format neatly for display.
+`;
+
 
     const response = await session.prompt(prompt, {
       responseConstraint: schema,
@@ -216,6 +298,7 @@ function renderQuiz(quiz, quizDiv) {
 
   quiz.forEach((q, i) => {
     const qDiv = document.createElement("div");
+    qDiv.className = "option-btn";
     qDiv.innerHTML = `<p><b>Q${i + 1}.</b> ${q.question}</p>`;
 
     q.options.forEach((opt) => {
@@ -244,3 +327,6 @@ function renderQuiz(quiz, quizDiv) {
     quizDiv.appendChild(document.createElement("hr"));
   });
 }
+
+
+
