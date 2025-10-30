@@ -102,15 +102,18 @@ That’s **QuiSum** — a minimal, orange-themed, AI-powered Chrome extension th
 
 ## 🧩 System Flow
 
+## 🧩 System Flow
+
 ```mermaid
 graph TD;
-    A[User Selects Text] --> B[Floating ⚡ AI Button Appears];
-    B --> C[Popup Triggered → Summarize, Quiz, or Chat];
-    C --> D[Chrome Summarizer or Prompt API];
-    D --> E[Render Output in Popup];
-    E --> F[Quiz Mode Activates Dark Overlay];
-    F --> G[User Interacts on Focused Screen];
-    G --> H[Enhanced Learning & Retention];
+    A[User Selects Text / Right-Clicks / Clicks Extension Icon] --> B[Floating ⚡ AI Button Appears or Menu Triggered];
+    B --> C[Popup Opens → Choose Summarize 🪄, Quiz 🧠, or Chat 💬];
+    C --> D[Chrome Summarizer or Prompt API Activated];
+    D --> E[AI Generates Output → Summary / Quiz / Chat Response];
+    E --> F[Quiz Mode Activates Screen Darkening 🌑];
+    F --> G[User Interacts with Summary, Quiz, or Chat Interface];
+    G --> H[Enhanced Focus, Learning & Retention];
+
 ```
 
 
