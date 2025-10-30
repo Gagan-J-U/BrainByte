@@ -18,11 +18,16 @@ chrome.runtime.onMessage.addListener((message) => {
       blackoutDiv.style.width = "100vw";
       blackoutDiv.style.height = "100vh";
       blackoutDiv.style.backgroundColor = "black";
-      blackoutDiv.style.opacity = "0.9";
+      blackoutDiv.style.opacity = "0"; // start invisible
       blackoutDiv.style.zIndex = "999999";
-      blackoutDiv.style.transition = "opacity 0.5s ease";
-      blackoutDiv.style.pointerEvents = "none"; // ✅ allows nav interaction even when blacked out
+      blackoutDiv.style.transition = "opacity 1s ease"; // smoother transition
+      blackoutDiv.style.pointerEvents = "none"; // ✅ allows nav interaction
       document.body.appendChild(blackoutDiv);
+
+      // Trigger smooth fade-in after append
+      requestAnimationFrame(() => {
+        blackoutDiv.style.opacity = "0.9";
+      });
     }
   }
 
@@ -32,7 +37,7 @@ chrome.runtime.onMessage.addListener((message) => {
       setTimeout(() => {
         blackoutDiv.remove();
         blackoutDiv = null;
-      }, 500); // smooth fade-out
+      }, 1000); // match the transition duration
     }
   }
 });
