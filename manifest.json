@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Summarizer & Quiz Generator",
+  "version": "1.0",
+  "description": "Summarize selected text and generate quizzes using Chrome's built-in language model.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "LanguageModel" 
+  ],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+ 
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
