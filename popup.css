@@ -482,6 +482,12 @@ body.light-theme .option-btn {
 
 body.light-theme .subtitle,
 body.light-theme .chat-info p,
-body.light-theme .message-time {
-  color: #64748b;
+body.light-theme .message-time 
+body.light-theme .question-block{
+  color: #0d0f13;
 }
+#summary.hidden {
+  display: none;
+}
+
+

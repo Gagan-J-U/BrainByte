@@ -1,5 +1,9 @@
 
 
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("quizTab").click();
+});
+
 
 
 // Tab switching
@@ -53,6 +57,7 @@ quizTab.addEventListener('click', () => {
   chatTab.classList.remove('active');
   quizView.classList.add('active');
   chatView.classList.remove('active');
+  
 });
 
 chatTab.addEventListener('click', () => {
@@ -223,18 +228,27 @@ async function summarizeSelectedText() {
 }
 
 async function generateQuizFromSelectedText() {
+  //change
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+chrome.tabs.sendMessage(tab.id, { action: "startBlackout" });
   const quizDiv = document.getElementById("result");
   quizDiv.textContent = "⏳ Generating quiz...";
+  //change
+  
 
   const selectedText = await getSelectedText();
   if (!selectedText) {
     quizDiv.textContent = "❌ Please select some text first!";
+    //change
+    chrome.tabs.sendMessage(tab.id, { action: "stopBlackout" });
     return;
+    
   }
 
   if (!("LanguageModel" in window)) {
     quizDiv.textContent =
       "❌ Prompt API (LanguageModel) not available. Enable 'Prompt API' in chrome://flags.";
+       chrome.tabs.sendMessage(tab.id, { action: "stopBlackout" });
     return;
   }
 
@@ -260,6 +274,7 @@ async function generateQuizFromSelectedText() {
     };
 
     const prompt = `
+
 Generate a ${document.getElementById("difficulty").value} level multiple-choice quiz with ${document.getElementById("questions").value} questions based on the text below.
 
 Text:
@@ -290,15 +305,18 @@ Requirements:
     console.error(err);
     quizDiv.textContent = `❌ Error generating quiz: ${err.message}`;
   }
+  
 }
 
 /* ----------------------------- QUIZ RENDERING ----------------------------- */
-function renderQuiz(quiz, quizDiv) {
+  function renderQuiz(quiz, quizDiv) {
   quizDiv.innerHTML = "";
 
   quiz.forEach((q, i) => {
     const qDiv = document.createElement("div");
-    qDiv.className = "option-btn";
+
+    qDiv.classList.add("question-block");
+
     qDiv.innerHTML = `<p><b>Q${i + 1}.</b> ${q.question}</p>`;
 
     q.options.forEach((opt) => {
@@ -306,9 +324,11 @@ function renderQuiz(quiz, quizDiv) {
       btn.textContent = opt;
       btn.className = "option-btn";
 
-      btn.onclick = () => {
+      btn.addEventListener("click", () => {
+        // prevent multiple answers
         const allBtns = qDiv.querySelectorAll("button");
         allBtns.forEach((b) => (b.disabled = true));
+        btn.dataset.selected = "true";
 
         if (opt === q.answer) {
           btn.classList.add("correct");
@@ -318,13 +338,44 @@ function renderQuiz(quiz, quizDiv) {
             if (b.textContent === q.answer) b.classList.add("correct");
           });
         }
-      };
+      });
 
       qDiv.appendChild(btn);
     });
 
     quizDiv.appendChild(qDiv);
     quizDiv.appendChild(document.createElement("hr"));
+  });
+
+  // ✅ Add submit button
+  const submitBtn = document.createElement("button");
+  submitBtn.setAttribute("class","generate-btn")
+  submitBtn.textContent = "Submit Quiz";
+  submitBtn.className = "submit-btn";
+  submitBtn.style.marginTop = "20px";
+  quizDiv.appendChild(submitBtn);
+
+  // ✅ handle submit
+  submitBtn.addEventListener("click", async () => {
+    let correct = 0;
+    let total = quiz.length;
+
+    const questionBlocks = quizDiv.querySelectorAll(".question-block");
+    questionBlocks.forEach((qBlock, idx) => {
+      const selected = qBlock.querySelector("button[data-selected='true']");
+      if (selected && selected.textContent === quiz[idx].answer) correct++;
+    });
+
+    quizDiv.innerHTML = `<h3>🎯 Quiz Completed!</h3>
+      <p>You scored <b>${correct}</b> out of <b>${total}</b>.</p>`;
+
+    // ✅ stop blackout
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      chrome.tabs.sendMessage(tab.id, { action: "stopBlackout" });
+    } catch (err) {
+      console.error("Could not stop blackout:", err);
+    }
   });
 }
 
