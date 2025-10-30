@@ -347,11 +347,11 @@ Requirements:
     quizDiv.appendChild(document.createElement("hr"));
   });
 
-  // ✅ Add submit button
+ 
   const submitBtn = document.createElement("button");
-  submitBtn.setAttribute("class","generate-btn")
+  submitBtn.classList.add("action-btn")
   submitBtn.textContent = "Submit Quiz";
-  submitBtn.className = "submit-btn";
+  
   submitBtn.style.marginTop = "20px";
   quizDiv.appendChild(submitBtn);
 
