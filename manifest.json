@@ -1,13 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Summarizer & Quiz Generator",
+  "name": "Quisum",
   "version": "1.0",
   "description": "Summarize selected text and generate quizzes using Chrome's built-in language model.",
   "permissions": [
     "activeTab",
     "scripting",
     "LanguageModel" ,
-    "tabs"
+    "tabs",
+    "contextMenus"
   ],
   "host_permissions": ["<all_urls>"],
   "background": {
