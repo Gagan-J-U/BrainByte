@@ -191,8 +191,9 @@ async function generateQuizFromSelectedText() {
     };
 
     const prompt = `
-      Create a short multiple-choice quiz (${document.getElementById("questions")} questions) from this text:
+      Create a short multiple-choice quiz (${document.getElementById("questions")} questions) from this text with a difficulty of ${document.getElementById("difficulty").value}.:
       """${selectedText}"""
+      Make sure the answer to the questions are randomly placed among the options.
     `;
 
     const response = await session.prompt(prompt, {
