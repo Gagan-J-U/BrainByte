@@ -1,5 +1,9 @@
 
 
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("quizTab").click();
+});
+
 
 
 // Tab switching
@@ -14,6 +18,7 @@ quizTab.addEventListener('click', () => {
   chatTab.classList.remove('active');
   quizView.classList.add('active');
   chatView.classList.remove('active');
+  
 });
 
 chatTab.addEventListener('click', () => {
@@ -143,18 +148,27 @@ async function summarizeSelectedText() {
 }
 
 async function generateQuizFromSelectedText() {
+  //change
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+chrome.tabs.sendMessage(tab.id, { action: "startBlackout" });
   const quizDiv = document.getElementById("result");
   quizDiv.textContent = "⏳ Generating quiz...";
+  //change
+  
 
   const selectedText = await getSelectedText();
   if (!selectedText) {
     quizDiv.textContent = "❌ Please select some text first!";
+    //change
+    chrome.tabs.sendMessage(tab.id, { action: "stopBlackout" });
     return;
+    
   }
 
   if (!("LanguageModel" in window)) {
     quizDiv.textContent =
       "❌ Prompt API (LanguageModel) not available. Enable 'Prompt API' in chrome://flags.";
+       chrome.tabs.sendMessage(tab.id, { action: "stopBlackout" });
     return;
   }
 
@@ -193,7 +207,7 @@ async function generateQuizFromSelectedText() {
     const prompt = `
       Create a short multiple-choice quiz (${document.getElementById("questions")} questions) from this text with a difficulty of ${document.getElementById("difficulty").value}.:
       """${selectedText}"""
-      Make sure the answer to the questions are randomly placed among the options.
+      Make sure the answer to the questions are randomly placed among the options .
     `;
 
     const response = await session.prompt(prompt, {
@@ -208,14 +222,16 @@ async function generateQuizFromSelectedText() {
     console.error(err);
     quizDiv.textContent = `❌ Error generating quiz: ${err.message}`;
   }
+  
 }
 
 /* ----------------------------- QUIZ RENDERING ----------------------------- */
-function renderQuiz(quiz, quizDiv) {
+  function renderQuiz(quiz, quizDiv) {
   quizDiv.innerHTML = "";
 
   quiz.forEach((q, i) => {
     const qDiv = document.createElement("div");
+    qDiv.classList.add("question-block");
     qDiv.innerHTML = `<p><b>Q${i + 1}.</b> ${q.question}</p>`;
 
     q.options.forEach((opt) => {
@@ -223,9 +239,11 @@ function renderQuiz(quiz, quizDiv) {
       btn.textContent = opt;
       btn.className = "option-btn";
 
-      btn.onclick = () => {
+      btn.addEventListener("click", () => {
+        // prevent multiple answers
         const allBtns = qDiv.querySelectorAll("button");
         allBtns.forEach((b) => (b.disabled = true));
+        btn.dataset.selected = "true";
 
         if (opt === q.answer) {
           btn.classList.add("correct");
@@ -235,7 +253,7 @@ function renderQuiz(quiz, quizDiv) {
             if (b.textContent === q.answer) b.classList.add("correct");
           });
         }
-      };
+      });
 
       qDiv.appendChild(btn);
     });
@@ -243,4 +261,44 @@ function renderQuiz(quiz, quizDiv) {
     quizDiv.appendChild(qDiv);
     quizDiv.appendChild(document.createElement("hr"));
   });
+
+  // ✅ Add submit button
+  const submitBtn = document.createElement("button");
+  submitBtn.setAttribute("class","generate-btn")
+  submitBtn.textContent = "Submit Quiz";
+  submitBtn.className = "submit-btn";
+  submitBtn.style.marginTop = "20px";
+  quizDiv.appendChild(submitBtn);
+
+  // ✅ handle submit
+  submitBtn.addEventListener("click", async () => {
+    let correct = 0;
+    let total = quiz.length;
+
+    const questionBlocks = quizDiv.querySelectorAll(".question-block");
+    questionBlocks.forEach((qBlock, idx) => {
+      const selected = qBlock.querySelector("button[data-selected='true']");
+      if (selected && selected.textContent === quiz[idx].answer) correct++;
+    });
+
+    quizDiv.innerHTML = `<h3>🎯 Quiz Completed!</h3>
+      <p>You scored <b>${correct}</b> out of <b>${total}</b>.</p>`;
+
+    // ✅ stop blackout
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      chrome.tabs.sendMessage(tab.id, { action: "stopBlackout" });
+    } catch (err) {
+      console.error("Could not stop blackout:", err);
+    }
+  });
 }
+
+
+//hi
+
+
+
+
+
+

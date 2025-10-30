@@ -4,34 +4,40 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({ text: selectedText });
   }
 });
-// Add blackout overlay
-// function addBlackout() {
-//   if (document.getElementById("blackout-overlay")) return;
 
-//   const overlay = document.createElement("div");
-//   overlay.id = "blackout-overlay";
-//   overlay.style.position = "fixed";
-//   overlay.style.top = 0;
-//   overlay.style.left = 0;
-//   overlay.style.width = "100vw";
-//   overlay.style.height = "100vh";
-//   overlay.style.background = "black";
-//   overlay.style.zIndex = 999999;
-//   overlay.style.pointerEvents = "none";
-//   overlay.style.transition = "opacity 0.5s ease";
-//   overlay.style.opacity = "1";
+let blackoutDiv;
 
-//   document.body.appendChild(overlay);
-// }
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.action === "startBlackout") {
+    if (!blackoutDiv) {
+      blackoutDiv = document.createElement("div");
+      blackoutDiv.id = "blackout-overlay";
+      blackoutDiv.style.position = "fixed";
+      blackoutDiv.style.top = 0;
+      blackoutDiv.style.left = 0;
+      blackoutDiv.style.width = "100vw";
+      blackoutDiv.style.height = "100vh";
+      blackoutDiv.style.backgroundColor = "black";
+      blackoutDiv.style.opacity = "0.9";
+      blackoutDiv.style.zIndex = "999999";
+      blackoutDiv.style.transition = "opacity 0.5s ease";
+      blackoutDiv.style.pointerEvents = "none"; // ✅ allows nav interaction even when blacked out
+      document.body.appendChild(blackoutDiv);
+    }
+  }
 
-// Remove blackout overlay
-// function removeBlackout() {
-//   const overlay = document.getElementById("blackout-overlay");
-//   if (overlay) overlay.remove();
-// }
+  if (message.action === "stopBlackout") {
+    if (blackoutDiv) {
+      blackoutDiv.style.opacity = "0";
+      setTimeout(() => {
+        blackoutDiv.remove();
+        blackoutDiv = null;
+      }, 500); // smooth fade-out
+    }
+  }
+});
 
-// // Listen for messages from popup.js
-// chrome.runtime.onMessage.addListener((request) => {
-//   if (request.action === "addBlackout") addBlackout();
-//   if (request.action === "removeBlackout") removeBlackout();
-// });
+
+
+
+
