@@ -1,0 +1,3 @@
+- [x] Update popup.html with new structure (navbar, chat view, quiz view)
+- [x] Update popup.css with new styles (navigation, chat, light theme, animations)
+- [x] Update popup.js with tab switching, theme toggle, chat functionality, integrate existing logic

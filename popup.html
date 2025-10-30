@@ -5,48 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Quiz Generator</title>
   <link rel="stylesheet" href="popup.css" />
-  
 </head>
 <body>
-    
-    
-  <div class="wrapper">
-    <h1>🤖 AI Quiz Generator</h1>
-    <p class="subtitle">Generate intelligent quizzes from files or text instantly.</p>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-tabs">
+      <button class="nav-tab" id="quizTab">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+        Quiz
+      </button>
+      <button class="nav-tab active" id="chatTab">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+        Chat
+      </button>
+    </div>
+    <button class="theme-toggle" id="themeToggle">
+      <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+    </button>
+  </nav>
 
-    
+  <!-- Content Container -->
+  <div class="content">
 
-   
-    <h2>AI Policy Summarizer</h2>
-    <button id="summarizeBtn" class="generate-btn" >📝 Summarize Selected Text</button>
-    
-    <div id="summary">click the above button</div>
-    <div class="options">
-      <div class="option">
-        <label>Difficulty</label>
-        <select id="difficulty">
-          <option>Easy</option>
-          <option selected>Medium</option>
-          <option>Hard</option>
-        </select>
+    <!-- Chat View -->
+    <div class="view active" id="chatView">
+      <div class="chat-header">
+        <div class="chat-avatar">🤖</div>
+        <div class="chat-info">
+          <h2>AI Assistant</h2>
+          <p>Always ready to help</p>
+        </div>
       </div>
-      <div class="option">
-        <label>Questions</label>
-        <select id="questions">
-          <option>3</option>
-          <option selected>5</option>
-          <option>10</option>
-        </select>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="message">
+          <div class="message-avatar">🤖</div>
+          <div>
+            <div class="message-content">
+              <div class="message-text">Hi! I'm your AI assistant. I can help you understand content, answer questions, and provide explanations. How can I help you today?</div>
+            </div>
+            <div class="message-time">18:44</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything..." />
+        <button class="chat-send-btn" id="chatSendBtn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+          </svg>
+        </button>
+      </div>
+      <div class="chat-footer">Press Enter to send</div>
+    </div>
+
+    <!-- Quiz View -->
+    <div class="view" id="quizView">
+      <div class="wrapper">
+        <h1>🤖 AI Quiz Generator</h1>
+        <p class="subtitle">Generate intelligent quizzes from files or text instantly.</p>
+
+        <h2>AI Policy Summarizer</h2>
+        <button id="summarizeBtn" class="generate-btn">📝 Summarize Selected Text</button>
+
+        <div id="summary">Click the above button</div>
+
+        <div class="options">
+          <div class="option">
+            <label>Difficulty</label>
+            <select id="difficulty">
+              <option>Easy</option>
+              <option selected>Medium</option>
+              <option>Hard</option>
+            </select>
+          </div>
+          <div class="option">
+            <label>Questions</label>
+            <select id="questions">
+              <option>3</option>
+              <option selected>5</option>
+              <option>7</option>
+              <option>10</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="generate-btn" id="generateQuizBtn">
+          <span>⚡ Generate Quiz</span>
+        </button>
+
+        <div id="result"></div>
+        <div id="status"></div>
+        <div id="countdown"></div>
       </div>
     </div>
-    <button class="generate-btn" id="quiz">
-      <span>⚡ Generate Quiz</span>
-    </button>
-    <div id="quiz"></div>
-    <div id="result"></div>
   </div>
-  
-  
 
   <script src="popup.js"></script>
 </body>

@@ -2,44 +2,99 @@
 
 
 
-document.getElementById("quiz").addEventListener("click",generateQuizFromSelectedText);
+// Tab switching
+const quizTab = document.getElementById('quizTab');
+const chatTab = document.getElementById('chatTab');
+const quizView = document.getElementById('quizView');
+const chatView = document.getElementById('chatView');
+const themeToggle = document.getElementById('themeToggle');
 
+quizTab.addEventListener('click', () => {
+  quizTab.classList.add('active');
+  chatTab.classList.remove('active');
+  quizView.classList.add('active');
+  chatView.classList.remove('active');
+});
 
-// document.getElementById("quiz").addEventListener("click", async () => {
-//   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  
-//   // Tell content.js to make the tab black
-//   chrome.tabs.sendMessage(tab.id, { action: "addBlackout" });
+chatTab.addEventListener('click', () => {
+  chatTab.classList.add('active');
+  quizTab.classList.remove('active');
+  chatView.classList.add('active');
+  quizView.classList.remove('active');
+});
 
-//   // Start a timer for 10 seconds (for example)
-//   startTimer(document.getElementById('timer').values, tab.id);
-// });
+// Theme toggle
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('light-theme');
+  const isLight = document.body.classList.contains('light-theme');
 
-// function startTimer(seconds, tabId) {
-//   clearInterval(countdownInterval);
-//   let remaining = seconds;
-//   const countdownDisplay = document.getElementById("countdown");
-//   const status = document.getElementById("status");
+  if (isLight) {
+    themeToggle.innerHTML = `<svg class="moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>`;
+  } else {
+    themeToggle.innerHTML = `<svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>`;
+  }
+});
 
-//   countdownDisplay.textContent = `⏱️ Time Left: ${remaining}s`;
+// Chat functionality
+const chatInput = document.getElementById('chatInput');
+const chatSendBtn = document.getElementById('chatSendBtn');
+const chatMessages = document.getElementById('chatMessages');
 
-//   countdownInterval = setInterval(() => {
-//     remaining--;
-//     countdownDisplay.textContent = `⏱️ Time Left: ${remaining}s`;
+function sendMessage() {
+  const message = chatInput.value.trim();
+  if (!message) return;
 
-//     if (remaining <= 0) {
-//       clearInterval(countdownInterval);
-//       countdownDisplay.textContent = "⏰ Time's up!";
-//       status.style.color = "#ff6b6b";
-//       status.textContent = "Quiz session ended.";
+  const time = new Date().toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
 
-//       // Remove blackout when timer finishes
-//       chrome.tabs.sendMessage(tabId, { action: "removeBlackout" });
-//     }
-//   }, 1000);
-// }
+  const userMessage = `
+    <div class="message" style="flex-direction: row-reverse; text-align: right;">
+      <div>
+        <div class="message-content" style="background: linear-gradient(90deg, #2f80ed, #56ccf2); margin-left: auto;">
+          <div class="message-text">${message}</div>
+        </div>
+        <div class="message-time">${time}</div>
+      </div>
+    </div>
+  `;
 
-document.getElementById("summarizeBtn").addEventListener("click", summarizeSelectedText);
+  chatMessages.insertAdjacentHTML('beforeend', userMessage);
+  chatInput.value = '';
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // Simulate AI response (replace with actual API call)
+  setTimeout(() => {
+    const aiResponse = `
+      <div class="message">
+        <div class="message-avatar">🤖</div>
+        <div>
+          <div class="message-content">
+            <div class="message-text">I received your message: "${message}". This is where the AI response would appear!</div>
+          </div>
+          <div class="message-time">${time}</div>
+        </div>
+      </div>
+    `;
+    chatMessages.insertAdjacentHTML('beforeend', aiResponse);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }, 1000);
+}
+
+chatSendBtn.addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') sendMessage();
+});
+
+// Quiz functionality
+document.getElementById('summarizeBtn').addEventListener('click', summarizeSelectedText);
+document.getElementById('generateQuizBtn').addEventListener('click', generateQuizFromSelectedText);
 
 async function getSelectedText() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -50,7 +105,7 @@ async function getSelectedText() {
   });
 }
 
-// --- Summarizer logic (same as before) ---
+// --- Summarizer logic ---
 async function summarizeSelectedText() {
   const summaryDiv = document.getElementById("summary");
   summaryDiv.textContent = "⏳ Summarizing selected text...";
@@ -76,24 +131,17 @@ async function summarizeSelectedText() {
     });
 
     const summary = await summarizer.summarize(selectedText, {
-      context: "Give the summary in simple and give html code in the form of unorder list with li tage in outer",
+      context: "Give the summary in simple and give html code in the form of unorder list with li tag in outer",
     });
 
     summaryDiv.outerHTML = summary;
-    
+
   } catch (err) {
     console.error(err);
     summaryDiv.textContent = "❌ Error generating summary.";
   }
 }
 
-
-
-
-
-
-
- 
 async function generateQuizFromSelectedText() {
   const quizDiv = document.getElementById("result");
   quizDiv.textContent = "⏳ Generating quiz...";
@@ -143,7 +191,7 @@ async function generateQuizFromSelectedText() {
     };
 
     const prompt = `
-      Create a short multiple-choice quiz (3 questions) from this text:
+      Create a short multiple-choice quiz (${document.getElementById("questions")} questions) from this text:
       """${selectedText}"""
     `;
 
@@ -179,11 +227,11 @@ function renderQuiz(quiz, quizDiv) {
         allBtns.forEach((b) => (b.disabled = true));
 
         if (opt === q.answer) {
-          btn.style.background = "green";
+          btn.classList.add("correct");
         } else {
-          btn.style.background = "red";
+          btn.classList.add("wrong");
           allBtns.forEach((b) => {
-            if (b.textContent === q.answer) b.style.background = "green";
+            if (b.textContent === q.answer) b.classList.add("correct");
           });
         }
       };
