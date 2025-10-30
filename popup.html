@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Quiz Generator</title>
+  <link rel="stylesheet" href="popup.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
+
+</head>
+<body>
+  <div class="wrapper">
+    <h1>🤖 AI Quiz Generator</h1>
+    <p class="subtitle">Generate intelligent quizzes from files or text instantly.</p>
+
+    <div class="upload-card" id="uploadBox">
+      <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg" hidden />
+      <div class="upload-content">
+        <div class="upload-icon">📁</div>
+        <p><strong>Upload PDF or Image</strong> to create quiz</p>
+        <button id="uploadBtn">Select File</button>
+      </div>
+    </div>
+
+    <textarea id="topicInput" placeholder="e.g., Create a quiz about Neural Networks"></textarea>
+
+    <div class="options">
+      <div class="option">
+        <label>Difficulty</label>
+        <select id="difficulty">
+          <option>Easy</option>
+          <option selected>Medium</option>
+          <option>Hard</option>
+        </select>
+      </div>
+
+      <div class="option">
+        <label>Questions</label>
+        <select id="questions">
+          <option>3</option>
+          <option selected>5</option>
+          <option>10</option>
+        </select>
+      </div>
+
+      <div class="option">
+        <label>Type</label>
+        <select id="type">
+          <option selected>Multiple Choice</option>
+          <option>True / False</option>
+          
+        </select>
+      </div>
+
+      <div class="option">
+        <label>Timer</label>
+        <select id="timer">
+          <option value="none" selected>No Timer</option>
+          <option value="30">30 Seconds</option>
+          <option value="60">1 Minute</option>
+          <option value="120">2 Minutes</option>
+          <option value="300">5 Minutes</option>
+        </select>
+      </div>
+      
+    </div>
+
+    <button class="generate-btn" id="generateBtn">
+      <span>⚡ Generate Quiz</span>
+    </button>
+
+    <p id="status"></p>
+    <p id="countdown"></p>
+  </div>
+  
+
+  <script src="popup.js"></script>
+</body>
+</html>
