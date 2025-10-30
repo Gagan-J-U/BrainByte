@@ -160,3 +160,126 @@ select {
   margin-top: -8px;
   font-weight: 500;
 }
+/* 🌙 Global Popup Styling */
+body {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #f1f5f9;
+  font-family: "Poppins", sans-serif;
+  padding: 15px;
+  width: 340px;
+  overflow-y: auto;
+}
+
+h1, h2, h3 {
+  color: #f8fafc;
+  text-align: center;
+}
+
+p.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+/* 🧠 Quiz Container */
+#result {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 🏷️ Question Styling */
+#result p {
+  font-size: 15px;
+  font-weight: 500;
+  color: #f1f5f9;
+  margin-bottom: 10px;
+}
+
+/* 🎯 Option Buttons */
+.option-btn {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.option-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.option-btn:disabled {
+  opacity: 0.9;
+  cursor: not-allowed;
+}
+
+/* ✅ Correct Answer */
+.option-btn.correct {
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  color: #fff;
+  border-color: #22c55e;
+  transform: scale(1.02);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+}
+
+/* ❌ Wrong Answer */
+.option-btn.wrong {
+  background: linear-gradient(90deg, #dc2626, #ef4444);
+  color: #fff;
+  border-color: #ef4444;
+  transform: scale(1.02);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+
+/* ⚡ Divider */
+#result hr {
+  border: none;
+  height: 1px;
+  margin: 14px 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 🕓 Countdown & Status */
+#status {
+  text-align: center;
+  font-weight: 500;
+  margin-top: 12px;
+  color: #38bdf8;
+}
+
+#countdown {
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+  color: #facc15;
+  margin-top: 6px;
+}
+
+/* ✨ Fade-In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.option-btn {
+  animation: fadeIn 0.3s ease forwards;
+}
