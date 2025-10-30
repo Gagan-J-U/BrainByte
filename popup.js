@@ -4,6 +4,21 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("quizTab").click();
 });
 
+document.addEventListener("DOMContentLoaded", async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const action = urlParams.get("action");
+  const text = urlParams.get("text");
+
+  if (text) {
+    // if opened from right-click, auto-run the correct action
+    if (action === "summarizeText") {
+      summarizeSelectedText();
+    } else if (action === "generateQuiz") {
+      generateQuizFromSelectedText();
+    }
+  }
+});
+
 
 
 // Tab switching
@@ -182,6 +197,11 @@ document.getElementById('summarizeBtn').addEventListener('click', summarizeSelec
 document.getElementById('generateQuizBtn').addEventListener('click', generateQuizFromSelectedText);
 
 async function getSelectedText() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const text = urlParams.get("text");
+  if (text) return text;
+
+  // fallback for toolbar click
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   return new Promise((resolve) => {
     chrome.tabs.sendMessage(tab.id, { action: "getSelectedText" }, (response) => {
@@ -189,6 +209,7 @@ async function getSelectedText() {
     });
   });
 }
+
 
 // --- Summarizer logic ---
 async function summarizeSelectedText() {
@@ -378,6 +399,7 @@ Requirements:
     }
   });
 }
+
 
 
 
