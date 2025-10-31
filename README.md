@@ -53,7 +53,7 @@ That’s **BrainByte** — your minimalist, orange-themed Chrome AI extension th
 | ⚡ Click “Summarize” → instant summary popup | ![Summarizer Demo](demo/summarize.gif) |
 | 💬 Switch to Chat tab → context-aware chat | ![Chat Mode Demo](demo/chat.gif) |
 | 🧠 Click “Generate Quiz” → interactive quiz overlay | ![Quiz Demo](demo/quiz.gif) |
-| 🌑 Auto-dim screen during quiz | ![Dark Quiz Overlay](demo/dark.png) |
+| 🌑 Auto-dim screen during quiz | ![Dark Quiz Overlay](demo/dark.gif) |
 
 
 ---
