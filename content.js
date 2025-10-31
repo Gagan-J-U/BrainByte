@@ -53,11 +53,20 @@ let aiButton;
 // Create floating button
 function createFloatingButton() {
   aiButton = document.createElement("button");
-  aiButton.textContent = "⚡ AI";
+  const imgi=document.createElement("img");
+  imgi.src = chrome.runtime.getURL("icon.png");
+  imgi.style.width = "28px";
+imgi.style.height = "28px";
+imgi.style.objectFit = "contain";
+imgi.style.display = "block";
+
+
+
+  aiButton.appendChild(imgi);
   aiButton.id = "ai-float-btn";
   aiButton.style.position = "absolute";
   aiButton.style.zIndex = "999999";
-  aiButton.style.background = "#ff7a00";
+  // aiButton.style.background = "#ff7a00";
   aiButton.style.color = "#fff";
   aiButton.style.border = "none";
   aiButton.style.borderRadius = "20px";
