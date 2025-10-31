@@ -414,13 +414,7 @@ select option {
   font-size: 13px;
 }
 
-#countdown {
-  text-align: center;
-  font-weight: bold;
-  font-size: 15px;
-  color: #facc15;
-  margin-top: 6px;
-}
+
 
 @keyframes fadeIn {
   from {
@@ -510,7 +504,8 @@ body.light-theme .question-block
   opacity: 0.9;
   transform: scale(1.03);
 }
-body.light-theme {
+body.light-theme
+{
   color: #0d0f13 !important;
   background-color: #ffffff !important;
 }

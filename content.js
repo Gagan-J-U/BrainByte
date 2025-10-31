@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((message) => {
       blackoutDiv.style.left = 0;
       blackoutDiv.style.width = "100vw";
       blackoutDiv.style.height = "100vh";
-      blackoutDiv.style.backgroundColor = "black";
+      blackoutDiv.style.backgroundColor = "#0d0e0eff";
       blackoutDiv.style.opacity = "0"; // start invisible
       blackoutDiv.style.zIndex = "999999";
       blackoutDiv.style.transition = "opacity 1s ease"; // smoother transition
@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener((message) => {
 
       // Trigger smooth fade-in after append
       requestAnimationFrame(() => {
-        blackoutDiv.style.opacity = "0.9";
+        blackoutDiv.style.opacity = "1";
       });
     }
   }
@@ -53,11 +53,20 @@ let aiButton;
 // Create floating button
 function createFloatingButton() {
   aiButton = document.createElement("button");
-  aiButton.textContent = "⚡ AI";
+  const imgi=document.createElement("img");
+  imgi.src = chrome.runtime.getURL("icon.png");
+  imgi.style.width = "28px";
+imgi.style.height = "28px";
+imgi.style.objectFit = "contain";
+imgi.style.display = "block";
+
+
+
+  aiButton.appendChild(imgi);
   aiButton.id = "ai-float-btn";
   aiButton.style.position = "absolute";
   aiButton.style.zIndex = "999999";
-  aiButton.style.background = "#ff7a00";
+  // aiButton.style.background = "#ff7a00";
   aiButton.style.color = "#fff";
   aiButton.style.border = "none";
   aiButton.style.borderRadius = "20px";

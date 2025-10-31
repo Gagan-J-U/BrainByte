@@ -255,6 +255,8 @@ async function generateQuizFromSelectedText() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 chrome.tabs.sendMessage(tab.id, { action: "startBlackout" });
 
+
+
   const quizDiv = document.getElementById("result");
   quizDiv.textContent = "⏳ Generating quiz...";
   //change
@@ -334,18 +336,19 @@ Requirements:
 
 /* ----------------------------- QUIZ RENDERING ----------------------------- */
   function renderQuiz(quiz, quizDiv) {
+  const summaryWrapper = document.getElementById("summaryWrapper");
+if (summaryWrapper) {
+  summaryWrapper.style.display = "none"; // hides entire summary block
+}
   // 🟡 Hide summary div when quiz starts
-  const summaryDiv = document.getElementById("summary");
-  if (summaryDiv) {
-    summaryDiv.classList.add("hidden");
-  }
+  
 
   quizDiv.innerHTML = "";
 
   quiz.forEach((q, i) => {
     const qDiv = document.createElement("div");
     qDiv.classList.add("question-block");
-    qDiv.innerHTML = `<p><b>Q${i + 1}.</b> ${q.question}</p>`;
+    qDiv.innerHTML = `<b>Q${i + 1}.</b> ${q.question}`;
 
     q.options.forEach((opt) => {
       const btn = document.createElement("button");
@@ -407,14 +410,14 @@ Requirements:
       <p>You scored <b>${correct}</b> out of <b>${total}</b>.</p>`;
 
     // 🟢 Restore summary div after quiz completion
-    if (summaryDiv) {
-      setTimeout(() => summaryDiv.classList.remove("hidden"), 1000);
-    }
+    const summaryWrapper = document.getElementById("summaryWrapper");
+if (summaryWrapper) summaryWrapper.style.display = "block";
 
     // ✅ stop blackout effect if enabled
     try {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
       chrome.tabs.sendMessage(tab.id, { action: "stopBlackout" });
+      
     } catch (err) {
       console.error("Could not stop blackout:", err);
     }
