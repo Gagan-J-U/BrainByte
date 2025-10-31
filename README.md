@@ -44,7 +44,7 @@ That’s **BrainByte** — your minimalist, orange-themed Chrome AI extension th
 | Online distractions | Works offline with Gemini Nano for uninterrupted learning |
 
 ---
-```
+
 
 ## 🧱 Tech Stack & Architecture
 
