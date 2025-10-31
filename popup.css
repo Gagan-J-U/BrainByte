@@ -353,7 +353,7 @@ select option {
 #result p {
   font-size: 15px;
   font-weight: 500;
-  color: #363d44;
+  color: #b2b5b8;
   margin-bottom: 10px;
 }
 
@@ -479,14 +479,15 @@ body.light-theme #summary {
 body.light-theme .message-text,
 body.light-theme h2,
 body.light-theme label,
-body.light-theme .option-btn {
+body.light-theme .option-btn   {
   color: #0f172a;
 }
 
 body.light-theme .subtitle,
 body.light-theme .chat-info p,
 body.light-theme .message-time ,
-body.light-theme .question-block{
+body.light-theme .question-block
+{
   color: #0d0f13;
 }
 #summary.hidden {
@@ -513,4 +514,5 @@ body.light-theme {
   color: #0d0f13 !important;
   background-color: #ffffff !important;
 }
+
 
