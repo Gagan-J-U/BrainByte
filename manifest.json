@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Quisum",
+  "name": "BrainByte",
   "version": "1.0",
   "description": "Summarize selected text and generate quizzes using Chrome's built-in language model.",
   "permissions": [
