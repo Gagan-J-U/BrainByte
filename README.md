@@ -1,33 +1,47 @@
-# 🧠 QuiSum — Smart Summarize + Quiz  
-> ✨ *Learn faster, retain better — directly from any webpage.*
+# 🧠 BrainByte — Learn Smarter, Not Harder  
+> ✨ *Your all-in-one Chrome AI companion for summarizing, quizzing, and chatting — right from any webpage.*
 
 ![Chrome Extension](https://img.shields.io/badge/Platform-Chrome%20Extension-orange?style=flat-square)
 ![Built For](https://img.shields.io/badge/Built%20For-Google%20Hackathon-blue?style=flat-square)
-![AI Powered](https://img.shields.io/badge/Powered%20By-Chrome%20AI%20(Prompt%20%26%20Summarizer)-green?style=flat-square)
-
+![AI Powered](https://img.shields.io/badge/Powered%20By-Gemini%20Nano%20(Prompt%20%26%20Summarizer)-green?style=flat-square)
+![Open Source](https://img.shields.io/badge/Open%20Source-Yes-brightgreen?style=flat-square)
 
 ---
 
 ## 📘 Overview
-**QuiSum** is a smart Chrome extension that transforms your reading experience by instantly turning any selected text into:
-- 🪄 a **concise AI-generated summary**, or  
-- 🧩 an **interactive multiple-choice quiz**,  
-- 💬 or even a **chat-based learning session** powered by Chrome’s built-in AI.
+**BrainByte** is an AI-powered Chrome extension that transforms any webpage into an interactive learning environment.  
+With one click, users can:
+- 🪄 Get **instant AI-generated summaries**,  
+- 🧩 Take **auto-generated quizzes** with screen dimming for focus, or  
+- 💬 **Chat** with Chrome’s built-in Gemini Nano about the selected content.  
 
-It helps students, researchers, and curious minds **learn actively** instead of passively consuming content — all *within the same tab*.
+It’s built for students, researchers, and lifelong learners who want to **comprehend and retain knowledge faster**, directly from their browser.
 
 ---
 
 ## 🎯 Quick Pitch
-> “What if you could summarize, quiz, or chat with any paragraph using just one click?”
+> “What if every webpage could teach you something — in seconds?”
 
-That’s **QuiSum** — a minimal, orange-themed, AI-powered Chrome extension that:
-- Extracts meaning using Chrome’s **Summarizer API**
-- Generates quiz questions using **Prompt API**
-- Opens a **chat mode** for deeper learning  
-- Adds a **floating AI button** right next to your selected text 🟠  
-- Dims your screen automatically during quizzes for laser-focus 🌑  
-- And works perfectly via **right-click → “Summarize / Quizify”**
+That’s **BrainByte** — your minimalist, orange-themed Chrome AI extension that:
+- Summarizes any selected text using Chrome’s **Summarizer API**  
+- Generates instant quizzes using the **Prompt API**  
+- Launches a **built-in chatbot** for contextual learning  
+- Displays a **floating AI button** near your text selection 🟠  
+- **Dims your screen** automatically during quizzes for deep focus 🌑  
+- Runs **entirely on-device** using **Gemini Nano**, ensuring privacy and offline use  
+
+---
+
+## 🚀 Why BrainByte?
+
+| Problem | Solution |
+|----------|-----------|
+| Endless reading, low retention | One-click summaries for instant clarity |
+| Passive reading habits | Engage with interactive AI-generated quizzes |
+| Hard to focus while testing | Automatic screen dimming during quizzes |
+| Tedious switching between apps | Floating **AI button** integrates actions seamlessly |
+| Disjointed learning experiences | Summarize, quiz, and chat — all in one popup |
+| Online distractions | Works offline with Gemini Nano for uninterrupted learning |
 
 ---
 
@@ -35,56 +49,13 @@ That’s **QuiSum** — a minimal, orange-themed, AI-powered Chrome extension th
 
 | Action | Preview |
 |--------|----------|
-| 🟠 Select text → Floating “AI” button appears near selection | ![Floating Button Demo](demo/floating-button.gif) |
-| ⚡ Click “Summarize” → instant summary in popup | ![Summarizer Demo](demo/summarize.gif) |
-| 💬 Switch to Chat tab → ask context-aware questions | ![Chat Mode Demo](demo/chat.gif) |
+| 🟠 Select text → Floating “AI” button appears | ![Floating Button Demo](demo/floating-button.gif) |
+| ⚡ Click “Summarize” → instant summary popup | ![Summarizer Demo](demo/summarize.gif) |
+| 💬 Switch to Chat tab → context-aware chat | ![Chat Mode Demo](demo/chat.gif) |
 | 🧠 Click “Generate Quiz” → interactive quiz overlay | ![Quiz Demo](demo/quiz-darkmode.gif) |
-| 🌑 Auto-dim screen during quiz for distraction-free learning | ![Dark Quiz Overlay](demo/dark-mode.png) |
+| 🌑 Auto-dim screen during quiz | ![Dark Quiz Overlay](demo/dark-mode.png) |
 
 *(Replace demo GIFs/screenshots once available.)*
-
----
-
-## 🚀 Why QuiSum?
-
-| Problem | Solution |
-|----------|-----------|
-| Reading long articles is time-consuming | One-click summarization powered by Chrome AI |
-| Passive learning = poor retention | Turn any text into an engaging quiz instantly |
-| Hard to stay focused while testing knowledge | Auto-dim screen during quiz for better concentration |
-| Need quick access | Floating “⚡AI” icon appears instantly when text is selected |
-| Prefer traditional menu actions | Also works with **right-click → Summarize / Quizify** |
-| Want deeper understanding | Switch to the **Chat tab** for AI-driven explanations |
-
----
-
-## 💡 Key Features
-
-✅ **Instant Summaries** – Condense any selected text into key bullet points  
-✅ **AI-Generated Quizzes** – Interactive MCQs with randomized correct options  
-✅ **Floating AI Button** – Appears near selected text for quick actions  
-✅ **Context Menu Integration** – Right-click → Summarize / Quizify  
-✅ **Chat Mode** – Conversational learning experience inside popup  
-✅ **Screen Dimming Mode** – Dark overlay activates during quiz for full focus  
-✅ **Material Design UI** – Clean orange-accented layout (Google Material 3)  
-✅ **Privacy-First** – No data tracking, all AI runs locally in Chrome  
-✅ **Offline Ready** – Works with **Gemini Nano** (Chrome’s local AI model)
-
----
-
-## 🧭 How It Works
-
-1. **Select any text** on a webpage  
-2. A **floating orange “⚡AI” button** appears beside the selected text  
-3. Click it to open the QuiSum popup  
-4. Choose one of three actions:  
-   - 🪄 **Summarize** → get concise points instantly  
-   - 🧩 **Quizify** → take an AI-generated quiz  
-   - 💬 **Chat** → converse with Chrome AI about the content  
-5. During quiz mode:  
-   - 🌑 **Screen darkens** for distraction-free learning  
-   - 🧠 Questions appear with randomized options  
-6. Return to normal view or switch tabs anytime  
 
 ---
 
@@ -92,52 +63,69 @@ That’s **QuiSum** — a minimal, orange-themed, AI-powered Chrome extension th
 
 | Layer | Technology |
 |--------|-------------|
-| **Frontend** | HTML, CSS, Vanilla JS (Material Design-inspired UI) |
-| **Browser APIs** | Chrome AI Prompt API, Chrome Summarizer API |
-| **Content Script** | Detects text selection, injects floating AI button |
-| **Background Script** | Handles right-click actions and popup triggering |
-| **Popup** | Displays results, chat UI, and quiz interface |
-| **Permissions** | `activeTab`, `scripting`, `contextMenus` |
-
-
-## 🧩 System Flow
-
-## 🧩 System Flow
-
-```mermaid
-graph TD;
-    A[User Selects Text / Right-Clicks / Clicks Extension Icon] --> B[Floating ⚡ AI Button Appears or Menu Triggered];
-    B --> C[Popup Opens → Choose Summarize 🪄, Quiz 🧠, or Chat 💬];
-    C --> D[Chrome Summarizer or Prompt API Activated];
-    D --> E[AI Generates Output → Summary / Quiz / Chat Response];
-    E --> F[Quiz Mode Activates Screen Darkening 🌑];
-    F --> G[User Interacts with Summary, Quiz, or Chat Interface];
-    G --> H[Enhanced Focus, Learning & Retention];
-
-```
-
-
-
-## 🌟 Why It Stands Out (for Google Hackathon)
-
-| Feature | Description |
-|----------|--------------|
-| 🧠 **Three-in-One Chrome AI Experience** | Summarize, Quiz, and Chat with any webpage content seamlessly. |
-| 🟠 **Floating AI Button (Floater Icon)** | Appears contextually near selected text for an intuitive and fast user experience. |
-| 🌑 **Automatic Screen Darkening** | Dims the background during quizzes for improved focus and reduced distractions. |
-| 💬 **Built-in Chat Mode** | Enables interactive, context-aware explanations powered by Chrome’s on-device AI. |
-| 🧩 **Right-Click Integration** | Quickly access all features via the context menu without extra navigation. |
-| 🧱 **Material Design 3 UI** | Polished, responsive design that aligns with Google’s design principles. |
-| ⚙️ **Local Processing** | Works offline using Chrome’s Gemini Nano AI model — ensuring data privacy. |
-| 🚀 **Optimized for Focused Learning** | Reduces cognitive load by keeping all learning tools within one workflow. |
+| **Frontend** | HTML, CSS, Vanilla JS (Material 3 inspired UI) |
+| **Browser APIs** | Chrome Summarizer API, Prompt API |
+| **AI Engine** | Gemini Nano (on-device AI) |
+| **Content Script** | Detects text selection, injects AI button |
+| **Background Script** | Handles context menus & message routing |
+| **Popup UI** | Tab-based interface (Summary / Quiz / Chat) |
+| **Permissions** | `activeTab`, `contextMenus`, `scripting` |
 
 ---
 
-## 🔮 Future Improvements
+## 🧭 How It Works
 
-- 🗣️ **Voice Interaction** — Talk to QuiSum and learn hands-free  
-- 🧮 **Adaptive Quiz Difficulty** — Smart question scaling based on performance  
-- 🧠 **Learning History & Analytics** — Track progress, revisit weaknesses  
-- 🤝 **Collaborative Study Groups** — Share AI-generated quizzes or summaries with friends  
-- 🪶 **Theme Personalization** — Choose from Light, Dark, or Orange-Pro themes  
+```mermaid
+graph TD;
+    A[User Selects Text or Right-Clicks] --> B[Floating ⚡ AI Button Appears];
+    B --> C[Popup Opens → Choose Summarize 🪄, Quiz 🧠, or Chat 💬];
+    C --> D[Chrome Summarizer or Prompt API Triggered];
+    D --> E[Gemini Nano Generates Output Locally];
+    E --> F[Quiz Mode → Screen Dims Automatically 🌑];
+    F --> G[User Engages with AI Response];
+    G --> H[Improved Focus, Understanding & Retention];
+```
 
+---
+
+## 🌟 Why It Stands Out (Google Hackathon)
+
+| Highlight | Description |
+|------------|--------------|
+| 🧠 **Three-in-One AI Tool** | Summarizer, Quiz Generator, and Chatbot — all integrated. |
+| ⚡ **Floating AI Trigger** | Contextual button enhances usability. |
+| 🌑 **Smart Focus Mode** | Auto-dimming for distraction-free quizzes. |
+| 💬 **Gemini Nano Chat** | On-device AI for real-time contextual learning. |
+| 🧱 **Privacy-First Local AI** | Runs offline with no external API calls. |
+| 🟠 **Google-Themed UI** | Inspired by Material Design 3. |
+| 🧩 **Open Source Project** | Built for community-driven innovation. |
+
+---
+
+## 🔮 Future Roadmap
+
+- 🗣️ **Voice-Based Interaction** – Ask questions and hear responses  
+- 📊 **Personalized Quiz Difficulty** – Adaptive learning system  
+- 🧠 **Progress Tracking** – Save quiz results and summaries  
+- 🤝 **Collaborative Learning Mode** – Share notes & quizzes  
+- 🎨 **Custom Themes** – Light, Dark, and Focus modes  
+
+---
+
+## 🤝 Contributing
+
+BrainByte is **open source** and welcomes contributions!  
+1. Fork the repository  
+2. Create a feature branch  
+3. Submit a pull request  
+
+> Together, let’s build the smartest AI-powered learning companion for the web 🌐  
+
+---
+
+## 🧩 License
+This project is licensed under the **MIT License** — free to use, modify, and distribute.
+
+---
+
+### ✨ *BrainByte — Turning every webpage into a personal tutor.*
