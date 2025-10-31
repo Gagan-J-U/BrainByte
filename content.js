@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((message) => {
       blackoutDiv.style.left = 0;
       blackoutDiv.style.width = "100vw";
       blackoutDiv.style.height = "100vh";
-      blackoutDiv.style.backgroundColor = "black";
+      blackoutDiv.style.backgroundColor = "#0d0e0eff";
       blackoutDiv.style.opacity = "0"; // start invisible
       blackoutDiv.style.zIndex = "999999";
       blackoutDiv.style.transition = "opacity 1s ease"; // smoother transition
@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener((message) => {
 
       // Trigger smooth fade-in after append
       requestAnimationFrame(() => {
-        blackoutDiv.style.opacity = "0.9";
+        blackoutDiv.style.opacity = "1";
       });
     }
   }
