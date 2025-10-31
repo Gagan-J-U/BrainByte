@@ -44,19 +44,7 @@ That’s **BrainByte** — your minimalist, orange-themed Chrome AI extension th
 | Online distractions | Works offline with Gemini Nano for uninterrupted learning |
 
 ---
-
-## 🧩 Demo / Screenshots
-
-| Action | Preview |
-|--------|----------|
-| 🟠 Select text → Floating “AI” button appears | ![Floating Button Demo](demo/floating-button.gif) |
-| ⚡ Click “Summarize” → instant summary popup | ![Summarizer Demo](demo/summarize.gif) |
-| 💬 Switch to Chat tab → context-aware chat | ![Chat Mode Demo](demo/chat.gif) |
-| 🧠 Click “Generate Quiz” → interactive quiz overlay | ![Quiz Demo](demo/quiz.gif) |
-| 🌑 Auto-dim screen during quiz | ![Dark Quiz Overlay](demo/dark.gif) |
-
-
----
+```
 
 ## 🧱 Tech Stack & Architecture
 
